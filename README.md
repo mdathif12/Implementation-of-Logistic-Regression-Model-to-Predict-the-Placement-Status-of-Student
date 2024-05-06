@@ -8,99 +8,89 @@ To write a program to implement the the Logistic Regression Model to Predict the
 2. Anaconda – Python 3.7 Installation / Jupyter notebook
 
 ## Algorithm
-1.Import the required packages and print the present data.
-2.Print the placement data and salary data.
-3.Find the null and duplicate values.
-4.Using logistic regression find the predicted values of accuracy , confusion matrices.
-5.Display the results. 
+1. Start
+2. Import the required packages and print the present data
+3. Print the placement data and salary data.
+4. Find the null and duplicate values.
+5. Using logistic regression find the predicted values of accuracy , confusion matrices.
+6. Stop
 
 ## Program:
 ```
 /*
 Program to implement the the Logistic Regression Model to Predict the Placement Status of Student.
-Developed by: mohamed athif rahuman J
-RegisterNumber:  212223220058
+Developed by: 212223040198
+RegisterNumber: SHRIKRISHNA V
 */
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-df=pd.read_csv("Placement_Data.csv")
-df
-df.head()
-df.tail()
-df=df.drop(['sl_no','gender','salary'],axis=1)
-df=df.drop(['ssc_b','hsc_b'],axis=1)
-df.shape
-df.info()
-df["degree_t"]=df["degree_t"].astype("category")
-df["hsc_s"]=df["hsc_s"].astype("category")
-df["workex"]=df["workex"].astype("category")
-df["status"]=df["status"].astype("category")
-df["specialisation"]=df["specialisation"].astype("category")
-df["degree_t"]=df["degree_t"].cat.codes
-df["hsc_s"]=df["hsc_s"].cat.codes
-df["workex"]=df["workex"].cat.codes
-df["status"]=df["status"].cat.codes
-df["specialisation"]=df["specialisation"].cat.codes
-x=df.iloc[: ,:-1].values
-y=df.iloc[:,- 1].values
+data=pd.read_csv("C:/Users/admin/Downloads/rohithprem/Placement_Data.csv")
+data.head()
+
+data1=data.copy()
+data1=data1.drop(["sl_no","salary"],axis=1)
+data1.head()
+
+data.isnull()
+
+data1.duplicated().sum()
+
+from sklearn.preprocessing import LabelEncoder
+le=LabelEncoder()
+data1["gender"]=le.fit_transform(data1["gender"])
+data1["ssc_b"]=le.fit_transform(data1["ssc_b"])
+data1["hsc_b"]=le.fit_transform(data1["hsc_b"])
+data1["hsc_s"]=le.fit_transform(data1["hsc_s"])
+data1["degree_t"]=le.fit_transform(data1["degree_t"])
+data1["workex"]=le.fit_transform(data1["workex"])
+data1["specialisation"]=le.fit_transform(data1["specialisation"])
+data1["status"]=le.fit_transform(data1["status"])
+data1
+
+x=data1.iloc[:,:-1]
+x
+
+y=data1["status"]
 y
+
 from sklearn.model_selection import train_test_split
-x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2)
+x_train,x_test,y_train,y_test=train_test_split(x,y,test_size=0.2,random_state=0)
 
-df.head()
 from sklearn.linear_model import LogisticRegression
-
-#printing its accuracy
-clf=LogisticRegression()
-clf.fit(x_train,y_train)
-clf.score(x_test,y_test)
-from sklearn.linear_model import LogisticRegression
-lr = LogisticRegression(solver = "liblinear") 
+lr=LogisticRegression(solver="liblinear")
 lr.fit(x_train,y_train)
-y_pred = lr.predict(x_test)
+y_pred=lr.predict(x_test)
 y_pred
 
 from sklearn.metrics import accuracy_score
-accuracy = accuracy_score(y_test,y_pred)
+accuracy=accuracy_score(y_test,y_pred)
 accuracy
 
 from sklearn.metrics import confusion_matrix
-confusion = (y_test,y_pred)
-confusion 
+confusion=confusion_matrix(y_test,y_pred)
+confusion
 
 from sklearn.metrics import classification_report
 classification_report1 = classification_report(y_test,y_pred)
 print(classification_report1)
-# Predicting for random value
-clf.predict([[1	,78.33,	1,	2,	77.48,	2,	86.5,	0,	66.28]])
+
+lr.predict([[1,80,1,90,1,1,90,1,0,85,1,85]])
+ 
 
 ```
 
 ## Output:
-Dataset
-![image](https://github.com/mdathif12/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/149365313/41c53bc5-f701-4e06-8b35-fa519f737723)
-
-![image](https://github.com/mdathif12/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/149365313/757956a7-260e-4df0-adbc-a11d5f242a88)
-
-![image](https://github.com/mdathif12/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/149365313/e9141d95-2141-4035-8e94-040b4d54849f)
-
-![image](https://github.com/mdathif12/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/149365313/f7eab280-bcca-409b-93b1-cf8294e8d78b)
-
-![image](https://github.com/mdathif12/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/149365313/61e075ba-02a6-49eb-a98a-d5e7da1bc6e9)
-
-![image](https://github.com/mdathif12/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/149365313/80e8c8c4-d232-46da-bd50-6597272695d6)
-
-![image](https://github.com/mdathif12/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/149365313/1c0995c9-ecad-40c7-848f-855adab0c0ea)
-
-![image](https://github.com/mdathif12/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/149365313/378a6b64-00ce-484e-afce-7153042e2f54)
-
-![image](https://github.com/mdathif12/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/149365313/5faf87b5-cdd5-4b15-9a6d-00ff5ee19484)
-
-![image](https://github.com/mdathif12/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/149365313/d7517006-e147-4dbf-8abb-081e38d08ac6)
-
-![image](https://github.com/mdathif12/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/149365313/7afb4e55-1d30-4ca7-adb8-9a6f05b09058)
-
+![1](https://github.com/23003250/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/146315115/38233e24-9e44-4a73-bbd4-e6f2eeff17cd)
+![2](https://github.com/23003250/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/146315115/ff502714-439d-42a7-82cb-ca172496973a)
+![3](https://github.com/23003250/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/146315115/fc5d9131-8f99-4e48-9373-c212025c6c9e)
+![4](https://github.com/23003250/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/146315115/8b1a45c2-5ffa-45f0-8b20-ba3ad2dfd08f)
+![5](https://github.com/23003250/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/146315115/baab7f26-60b1-467a-b783-5acb3994427f)
+![6](https://github.com/23003250/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/146315115/4ef74eef-f93e-4b8c-ac7c-c68bc731b279)
+![7](https://github.com/23003250/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/146315115/1f74d6d5-dfae-4e03-8991-484d014f32f1)
+![8](https://github.com/23003250/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/146315115/08339dfc-316f-41f8-a9f6-bf2ae2ae3a2f)
+![9](https://github.com/23003250/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/146315115/5770d9ac-6e44-452f-8717-6c3780efa0fa)
+![10](https://github.com/23003250/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/146315115/54940b22-1e90-4eef-bb8c-eb9a4ae82519)
+![11](https://github.com/23003250/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/146315115/58a5fdf3-fb3c-43a6-8700-35ab7079cb50)
+![12](https://github.com/23003250/Implementation-of-Logistic-Regression-Model-to-Predict-the-Placement-Status-of-Student/assets/146315115/bc894fe8-84b3-431d-83ae-0263d9fddff3)
 
 
 
